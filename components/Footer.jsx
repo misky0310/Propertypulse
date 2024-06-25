@@ -5,9 +5,9 @@ import logo from '@/assets/images/logo.png'
 const Footer = () => {
     const curentYear = new Date().getFullYear()
   return (
-    <footer className="bg-gray-200 py-4 absolute bottom-0 w-full">
+    <footer className="bg-gray-200 py-4 relative">
       <div
-        className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4"
+        className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 absolute bottom-0"
       >
         <div className="mb-4 md:mb-0">
           <Image src={logo} alt="Logo" className="h-8 w-auto" />
