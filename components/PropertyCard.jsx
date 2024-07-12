@@ -8,6 +8,8 @@ import {
   FaLocationArrow,
 } from "react-icons/fa";
 
+import Link from "next/link";
+
 const PropertyCard = ({ property }) => {
   const getRate = () => {
     if (property.rates.monthly) return `${property.rates.monthly} /mo`;
@@ -84,12 +86,12 @@ const PropertyCard = ({ property }) => {
             <FaLocationArrow className="text-orange-700 text-lg" />
             <span className="text-orange-700 w-8/12"> {property.location.street}, {property.location.city} - {property.location.state} </span>
           </div>
-          <a
-            href="property.html"
+          <Link
+            href={`properties/${property._id}`} // replace
             className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
           >
             Details
-          </a>
+          </Link>
         </div>
       </div>
     </div>
