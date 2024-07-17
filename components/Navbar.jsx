@@ -15,6 +15,7 @@ import { FaGoogle } from "react-icons/fa";
 const Navbar = () => {
   
   const {data: session} = useSession();
+  const profileImage=session?.user?.image;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -31,6 +32,7 @@ const Navbar = () => {
   }, [])
 
   const pathname = usePathname();
+
 
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
@@ -171,7 +173,10 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full"
-                      src={profileDefault}
+                      src={profileImage || profileDefault}
+                      sizes="100vw"
+                      width={0}
+                      height={0}
                       alt=""
                     />
                   </button>
@@ -188,6 +193,7 @@ const Navbar = () => {
                     tabIndex="-1"
                   >
                     <Link
+                    onClick={() => setIsProfileOpen(false)}
                       href="/profile"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
@@ -197,6 +203,7 @@ const Navbar = () => {
                       Your Profile
                     </Link>
                     <Link
+                    onClick={() => setIsProfileOpen(false)}
                       href="/properties/saved"
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
@@ -206,6 +213,10 @@ const Navbar = () => {
                       Saved Properties
                     </Link>
                     <button
+                      onClick={() => {
+                        setIsProfileOpen(false);
+                        signOut();
+                      }}
                       className="block px-4 py-2 text-sm text-gray-700"
                       role="menuitem"
                       tabIndex="-1"
