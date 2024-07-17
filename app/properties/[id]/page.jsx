@@ -5,7 +5,7 @@ import { fetchProperty } from '@/utils/requests';
 import PropertyHeaderImage from '@/components/PropertyHeaderImage';
 import Link from 'next/link';
 
-import {FaArrowLeft} from 'react-icons/fa'
+import {FaArrowLeft,FaPaperPlane,FaBookmark,FaShare} from 'react-icons/fa'
 import PropertyDetails from '@/components/PropertyDetails';
 import Spinner from '@/components/Spinner';
 
@@ -67,12 +67,12 @@ const PropertyPage = () => {
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             >
-              <i className="fas fa-bookmark mr-2"></i> Bookmark Property
+              <FaBookmark className='mr-2'/> Bookmark Property
             </button>
             <button
               className="bg-orange-500 hover:bg-orange-600 text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center"
             >
-              <i className="fas fa-share mr-2"></i> Share Property
+              <FaShare className='mr-2'/> Share Property
             </button>
 
             {/* <!-- Contact Form --> */}
@@ -141,7 +141,7 @@ const PropertyPage = () => {
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline flex items-center justify-center"
                     type="submit"
                   >
-                    <i className="fas fa-paper-plane mr-2"></i> Send Message
+                    <FaPaperPlane className='mr-2'/> Send Message
                   </button>
                 </div>
               </form>
