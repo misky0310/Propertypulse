@@ -18,7 +18,7 @@ const PropertyCard = ({ property }) => {
   };
 
   return (
-    <div className="rounded-xl shadow-md relative">
+    <div className="rounded-xl shadow-md relative hover:scale-105 transition-all">
       <Image
         src={`/images/properties/${property.images[0]}`}
         alt=""
@@ -27,7 +27,7 @@ const PropertyCard = ({ property }) => {
         sizes="100vw"
         className="w-full h-auto rounded-t-xl"
       />
-      <div className="p-4 bg-slate-800 rounded-b-lg">
+      <div className="p-4 bg-slate-800 rounded-b-lg ">
         <div className="text-left md:text-center lg:text-left mb-6">
           <div className="text-gray-400">{property.type}</div>
           <h3 className="text-xl text-slate-300 font-bold">{property.name}</h3>
