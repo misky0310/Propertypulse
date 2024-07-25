@@ -20,7 +20,7 @@ const PropertyCard = ({ property }) => {
   return (
     <div className="rounded-xl shadow-md relative hover:scale-105 transition-all">
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={property.images[0]}
         alt=""
         height={0}
         width={0}
@@ -59,19 +59,19 @@ const PropertyCard = ({ property }) => {
         </div>
 
         <div className="flex justify-center gap-4 text-green-500 text-sm mb-4">
-          {property.rates.weekly && (
+          {property.rates.weekly!==0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Weekly
             </p>
           )}
-          {property.rates.monthly && (
+          {property.rates.monthly!==0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Monthly
             </p>
           )}
-          {property.rates.nightly && (
+          {property.rates.nightly!==0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Nightly
