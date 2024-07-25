@@ -4,7 +4,7 @@ const fetchProperties =  async() => {
       if(!process.env.NEXT_PUBLIC_API_DOMAIN)
         return [];
 
-      const res=await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`)
+      const res=await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`,{cache:'no-store'});
       
         if(!res.ok) throw new Error('Error fetching properties');
   

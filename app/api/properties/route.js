@@ -1,7 +1,8 @@
+import cloudinary from "@/app/config/cloudinary";
 import connectDB from "@/app/config/database"
 import Property from "@/models/Property"
 import { getSessionUser } from "@/utils/getSessionUser";
-import { redirect } from "next/navigation";
+
 
 
 
@@ -66,9 +67,40 @@ export const POST = async (request) => {
                 email:formData.get('seller_info.email')
             },
             owner:userId,
-            // images
         }
 
+        //upload images to cloudinary
+        //select images from form
+        //convert into array buffer
+        //we get the data from buffer
+        //upload to cloudinary
+        //get the response from cloudinary
+
+        const imageUploadPromises=[];
+
+        for(const image of images){
+            const imageBuffer=await image.arrayBuffer();
+            const imageArray=Array.from(new Uint8Array(imageBuffer));
+            const imageData=Buffer.from(imageArray);
+
+            //conver the image data into base 64
+            const imageBase64=imageData.toString('base64');
+
+            //make request to upload to cloudinary
+            const result=await cloudinary.uploader.upload(
+                `data:image/png;base64,${imageBase64}`,{
+                    folder:'propertypulse'
+                }
+            )
+
+            //push the secure url to the image upload promises
+            imageUploadPromises.push(result.secure_url)
+
+            //wait for all images to upload
+            const uploadedImages=await Promise.all(imageUploadPromises)
+
+            propertyData.images=uploadedImages;
+        }
 
 
 
