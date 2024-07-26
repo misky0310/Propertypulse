@@ -5,6 +5,7 @@ import profileDefault from "@/assets/images/profile.png";
 import React, { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const [userProperties, setUserProperties] = useState([]);
@@ -36,14 +37,32 @@ const ProfilePage = () => {
   }, [session]);
 
   const handleDeleteProperty = async (propertyId) => {
-    
+    const confirmed=window.confirm("Are you sure you want to delete this property?");
+    if (!confirmed) return;
+    try {
+        const res=await fetch(`/api/properties/${propertyId}`,{method:'DELETE'});
+
+        if(!res.ok) toast.error('Failed to delete property');
+
+        //Remove the property from state
+        const updatedProperties=userProperties.filter((property) => (
+            property._id!==propertyId
+        ))
+
+        //update the listings
+        setUserProperties(updatedProperties)
+        toast.success('Property Deleted')
+    } catch (error) {
+        console.log(error);
+        toast.error('Failed to delete property')
+    }
   }
 
   return (
     <section className="bg-black">
       <div className="container m-auto py-24">
         <div className="bg-slate-700 px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-          <h1 className="text-3xl font-bold mb-4 text-gray-50">Your Profile</h1>
+          <h1 className="text-3xl font-bold mb-4 text-gray-50 text-center  w-1/3">Your Profile</h1>
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mx-20 mt-10">
               <div className="mb-4">
@@ -67,7 +86,7 @@ const ProfilePage = () => {
             </div>
 
             <div className="md:w-3/4 md:pl-4">
-              <h2 className="text-xl font-semibold mb-4 text-gray-50">
+              <h2 className="text-xl font-semibold mb-4 text-gray-50 text-center">
                 Your Listings
               </h2>
               {!loading && userProperties.length === 0 && (
