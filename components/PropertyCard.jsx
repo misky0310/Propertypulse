@@ -1,5 +1,7 @@
+'use client';
 import React from "react";
 import Image from "next/image";
+
 import {
   FaBath,
   FaBed,
@@ -9,6 +11,7 @@ import {
 } from "react-icons/fa";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const PropertyCard = ({ property }) => {
   const getRate = () => {
@@ -16,6 +19,9 @@ const PropertyCard = ({ property }) => {
     else if (property.rates.weekly) return `${property.rates.weekly} /wk`;
     else if (property.rates.nightly) return `${property.rates.nightly} /night`;
   };
+
+  const path=usePathname();
+  console.log(path)
 
   return (
     <div className="rounded-xl shadow-md relative hover:scale-105 transition-all">
@@ -87,7 +93,7 @@ const PropertyCard = ({ property }) => {
             <span className="text-orange-700 w-8/12"> {property.location.street}, {property.location.city} - {property.location.state} </span>
           </div>
           <Link
-            href={`properties/${property._id}`} // replace
+            href={`${path==='properties' ? '' : '/properties'}/${property._id}`} 
             className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
           >
             Details
