@@ -21,7 +21,7 @@ const PropertyCard = ({ property }) => {
   };
 
   const path=usePathname();
-  console.log(path)
+
 
   return (
     <div className="rounded-xl shadow-md relative hover:scale-105 transition-all">
