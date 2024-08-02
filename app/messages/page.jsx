@@ -39,7 +39,7 @@ const MessagesPage = () => {
 
     return(
         loading? <Spinner loading={loading}/> : (
-            messages.length===0? <h1 className="text-2xl text-center text-white">No messages</h1> : (
+            messages.length===0? <h1 className="text-4xl text-center text-white flex flex-col justify-center h-screen">No messages</h1> : (
                 <section>
                     <div className="container m-auto py-24 max-w-6xl">
                         <div className="bg-black px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">

@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { toast } from "react-toastify";
 
 
+
 const MessageCard = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
   
@@ -20,6 +21,16 @@ const MessageCard = ({ message }) => {
     }
   }
 
+  const handleDeleteClick = async () => {
+    const res=await fetch(`/api/messages/${message._id}`,{
+        method:'DELETE'
+    });
+    if(res.status==200){
+        window.location.reload();
+    }
+    else
+        toast.error('Something went wrong');
+  }
 
   return (
     <div className="relative bg-slate-800 p-4 rounded-md shadow-md border border-gray-100 px-2 py-1 ">
@@ -52,10 +63,13 @@ const MessageCard = ({ message }) => {
       <div className="flex items-center space-x-1">
         <button
             onClick={handleReadClick}
-            className="mt-4 py-1 my-2 mr-3 bg-blue-500 px-3 rounded-md text-white hover:bg-blue-600">
+            className={`mt-4 py-1 my-2 mr-3 ${isRead? 'bg-blue-500 ' : 'bg-green-500'} px-3 rounded-md text-white 
+            ${isRead? 'hover:bg-blue-600 ' : 'hover:bg-green-600'}`}>
             {isRead ? "Mark as new" : "Mark as read"}
         </button>
-        <button className="mt-4 py-1 my-2 mr-3 bg-red-500 px-3 rounded-md text-white hover:bg-red-600">
+        <button 
+          onClick={handleDeleteClick}
+          className="mt-4 py-1 my-2 mr-3 bg-red-500 px-3 rounded-md text-white hover:bg-red-600">
           Delete
         </button>
       </div>
