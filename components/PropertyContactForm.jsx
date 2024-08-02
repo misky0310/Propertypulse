@@ -1,6 +1,8 @@
 "use client";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const PropertyContactForm = ({ property }) => {
   const [name, setName] = useState("");
@@ -9,25 +11,60 @@ const PropertyContactForm = ({ property }) => {
   const [message, setMessage] = useState("");
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
-  const handleSubmit= (e) => {
+  const { data: session } = useSession();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data={
+    const data = {
       name,
       email,
       phone,
       message,
-      recipient:property.owner,
-      property:property._id
-    }
+      recipient: property.owner,
+      property: property._id,
+    };
 
-    
-  }
+    try {
+      const res = await fetch(`/api/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const response = await res.json();
+
+      if (res.status === 400) {
+        toast.error(response.message);
+      } else if (res.status == 200) {
+        toast.success("Message sent successfully");
+        setWasSubmitted(true);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    } finally {
+      setEmail("");
+      setName("");
+      setPhone("");
+      setMessage("");
+    }
+  };
 
   return (
     <div className="bg-slate-600 p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-bold mb-6 text-center text-white">Contact Property Manager</h3>
-      {wasSubmitted ? (
+      <h3 className="text-xl font-bold mb-6 text-center text-white">
+        Contact Property Manager
+      </h3>
+      {!session ? (
+        <div className="bg-red-500 text-white text-sm p-2 mb-4 rounded">
+          You must be logged in to send a message
+        </div>
+      ) : wasSubmitted ? (
         <div className="bg-green-500 text-white text-sm p-2 mb-4 rounded">
           Your message has been sent successfully!
         </div>
@@ -91,7 +128,7 @@ const PropertyContactForm = ({ property }) => {
               Message:
             </label>
             <textarea
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-50 h-44 focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-44 focus:outline-none focus:shadow-outline"
               id="message"
               placeholder="Enter your message"
               value={message}

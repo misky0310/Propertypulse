@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import Email from "next-auth/providers/email";
 
 const messageSchema= new mongoose.Schema({
     sender:{
@@ -7,7 +6,7 @@ const messageSchema= new mongoose.Schema({
         ref:'User',
         required:true
     },
-    receiver:{
+    recipient:{
         type:Schema.Types.ObjectId,
         ref:'User',
         required:true
