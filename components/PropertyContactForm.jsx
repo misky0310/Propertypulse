@@ -65,7 +65,7 @@ const PropertyContactForm = ({ property }) => {
           You must be logged in to send a message
         </div>
       ) : wasSubmitted ? (
-        <div className="bg-green-500 text-white text-sm p-2 mb-4 rounded">
+        <div className="bg-green-500 text-white text-sm px-1 py-2 mb-4 rounded">
           Your message has been sent successfully!
         </div>
       ) : (

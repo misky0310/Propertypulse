@@ -2,11 +2,12 @@
 
 import React, { useState } from "react"
 import { toast } from "react-toastify";
-
+import { useGlobalContext } from "@/context/GlobalContext";
 
 
 const MessageCard = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
+  const {setUnreadCount}=useGlobalContext();
   
 
   const handleReadClick = async () => {
@@ -17,6 +18,7 @@ const MessageCard = ({ message }) => {
         const read=await res.json();
         console.log('Setting to',read);
         setIsRead(read);
+        setUnreadCount((prev)=>read?prev-1:prev+1);
         toast.success(`${read?'Message marked as read':'Message marked as new'}`);
     }
   }
@@ -26,6 +28,7 @@ const MessageCard = ({ message }) => {
         method:'DELETE'
     });
     if(res.status==200){
+        setUnreadCount((prev)=>isRead?prev:prev-1);
         window.location.reload();
     }
     else
