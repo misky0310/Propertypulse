@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import Image from "next/image";
 
@@ -20,19 +20,24 @@ const PropertyCard = ({ property }) => {
     else if (property.rates.nightly) return `${property.rates.nightly} /night`;
   };
 
-  const path=usePathname();
-
+  const path = usePathname();
 
   return (
     <div className="rounded-xl shadow-md relative hover:scale-105 transition-all">
-      <Image
-        src={property.images[0]}
-        alt=""
-        height={0}
-        width={0}
-        sizes="100vw"
-        className="w-full h-auto rounded-t-xl"
-      />
+      <Link
+        href={`${path === "properties" ? "" : "/properties"}/${property._id}`}
+        className="hover:cursor-pointer"
+      >
+        <Image
+          src={property.images[0]}
+          alt=""
+          height={0}
+          width={0}
+          sizes="100vw"
+          className="w-full h-auto rounded-t-xl"
+        />
+      </Link>
+
       <div className="p-4 bg-slate-800 rounded-b-lg ">
         <div className="text-left md:text-center lg:text-left mb-6">
           <div className="text-gray-400">{property.type}</div>
@@ -65,19 +70,19 @@ const PropertyCard = ({ property }) => {
         </div>
 
         <div className="flex justify-center gap-4 text-green-500 text-sm mb-4">
-          {property.rates.weekly!==0 && (
+          {property.rates.weekly !== 0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Weekly
             </p>
           )}
-          {property.rates.monthly!==0 && (
+          {property.rates.monthly !== 0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Monthly
             </p>
           )}
-          {property.rates.nightly!==0 && (
+          {property.rates.nightly !== 0 && (
             <p className="flex items-center">
               <FaMoneyBill className="mr-1" />
               Nightly
@@ -90,10 +95,16 @@ const PropertyCard = ({ property }) => {
         <div className="flex flex-col lg:flex-row justify-between mb-4">
           <div className="flex items-center align-middle gap-2 mb-4 lg:mb-0">
             <FaLocationArrow className="text-orange-700 text-lg" />
-            <span className="text-orange-700 w-8/12"> {property.location.street}, {property.location.city} - {property.location.state} </span>
+            <span className="text-orange-700 w-8/12">
+              {" "}
+              {property.location.street}, {property.location.city} -{" "}
+              {property.location.state}{" "}
+            </span>
           </div>
           <Link
-            href={`${path==='properties' ? '' : '/properties'}/${property._id}`} 
+            href={`${path === "properties" ? "" : "/properties"}/${
+              property._id
+            }`}
             className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
           >
             Details
