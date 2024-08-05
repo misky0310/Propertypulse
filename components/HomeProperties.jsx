@@ -2,12 +2,17 @@ import React from "react";
 import PropertyCard from "@/components/PropertyCard";
 import Link from "next/link";
 import { fetchProperties } from "@/utils/requests";
+import connectDB from "@/app/config/database";
+import Property from "@/models/Property";
 
 
 
 const HomeProperties = async () => {
+  await connectDB();
 
-  const properties= await fetchProperties();
+  const propertiesFromDB= await Property.find({}).lean();
+
+  const properties=JSON.parse(JSON.stringify(propertiesFromDB));
 
   const recentProperties = properties
     .sort(() => Math.random() - Math.random())
