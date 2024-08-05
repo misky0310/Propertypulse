@@ -4,22 +4,6 @@ import Property from "@/models/Property"
 import { getSessionUser } from "@/utils/getSessionUser";
 
 
-
-
-//GET /api/properties
-
-export const GET= async (request) => {
-    try {
-        
-        await connectDB();
-        const properties= await Property.find({})
-        return new Response(JSON.stringify(properties))
-
-    } catch (error) {
-        return new Response(JSON.stringify({'message':'Error fetching properties'}))
-    }
-}
-
 export const POST = async (request) => {
     try {
         //connect to DB
